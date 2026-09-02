@@ -20,12 +20,12 @@ $exams = [
     ],
     12=>[
         'board'=>2016,
-        'compartment'=>2016,
+        'compartment'=>2022,
         'compartment_compartment'=>2022,
         'enhancement'=>2022,
     ]
 ];
-$query = "insert into exams (name,session_id,exam_type_id,class_level_id) values ";
+$query = "insert into exams (name,session_id,exam_session_id,exam_type_id,class_level_id) values ";
 $year = 2016;
 $endYear = date('Y')-1;
 while($year <= $endYear){
@@ -37,8 +37,12 @@ while($year <= $endYear){
             }else{
                 $examName = "Board Exam $year";
             }
+            $examSession = $examType=='compartment_compartment' ? $year+1 : $year;
+            if($classLevelId==10 && $examType=='compartment' && $year==2020){
+                $examSession = 2021;
+            }
             if($year >= $examYear){
-                $query .= "<br>('$examName','$year','$examType','$classLevelId'),";
+                $query .= "<br>('$examName','$year','$examSession','$examType','$classLevelId'),";
             }
         }
         

@@ -1,51 +1,6 @@
 <?php
 
-const DB_NAME = '`nbsemis`';
-const PORTAL_DB = '`nbsev2`';
-
-const CL11 = [
-    'a'=>[
-        'idcode'=>'arts',
-        'ft'=>'nbse_form42arts',
-        'rt'=>'nbse_11arts_result',
-        'subjects'=>[
-            ['col'=>'nbse_compulsory_one','rt'=>'nbse_compulsory1_total','imp'=>'nbse_compulsory_one_imp'],
-            ['col'=>'nbse_elective_one','rt'=>'nbse_elective1_total','imp'=>'nbse_elective_one_imp'],
-            ['col'=>'nbse_elective_two','rt'=>'nbse_elective2_total','imp'=>'nbse_elective_two_imp'],
-            ['col'=>'nbse_elective_three','rt'=>'nbse_elective3_total','imp'=>'nbse_elective_three_imp'],
-            ['col'=>'nbse_elective_four','rt'=>'nbse_elective4_total','imp'=>'nbse_elective_four_imp'],
-            ['col'=>'nbse_additional_subject','rt'=>'nbse_additional_total','imp'=>'nbse_additional_subject_imp'],
-        ]
-    ],
-    'c'=>[
-        'idcode'=>'commerce',
-        'ft'=>'nbse_form42commerce',
-        'rt'=>'nbse_11commerce_result',
-        'subjects'=>[
-            ['col'=>'nbse_compulsory_one','rt'=>'nbse_compulsory1_total','imp'=>'nbse_compulsory_one_imp'],
-            ['col'=>'nbse_compulsory_two','rt'=>'nbse_compulsory2_total','imp'=>'nbse_compulsory_two_imp'],
-            ['col'=>'nbse_compulsory_three','rt'=>'nbse_compulsory3_total','imp'=>'nbse_compulsory_three_imp'],
-            ['col'=>'nbse_compulsory_four','rt'=>'nbse_compulsory4_total','imp'=>'nbse_compulsory_four_imp'],
-            ['col'=>'nbse_elective_one','rt'=>'nbse_elective1_total','imp'=>'nbse_elective_one_imp'],
-            ['col'=>'nbse_additional_subject','rt'=>'nbse_additional_total','imp'=>'nbse_additional_subject_imp'],
-        ]
-    ],
-    's'=>[
-        'idcode'=>'science',
-        'ft'=>'nbse_form42science',
-        'rt'=>'nbse_11science_result',
-        'subjects'=>[
-            ['col'=>'nbse_compulsory_one','rt'=>'nbse_compulsory1_total','imp'=>'nbse_compulsory_one_imp'],
-            ['col'=>'nbse_compulsory_two','rt'=>'nbse_compulsory2_total','imp'=>'nbse_compulsory_two_imp'],
-            ['col'=>'nbse_compulsory_three','rt'=>'nbse_compulsory3_total','imp'=>'nbse_compulsory_three_imp'],
-            ['col'=>'nbse_elective_one','rt'=>'nbse_elective1_total','imp'=>'nbse_elective_one_imp'],
-            ['col'=>'nbse_elective_two','rt'=>'nbse_elective2_total','imp'=>'nbse_elective_two_imp'],
-            ['col'=>'nbse_additional_subject','rt'=>'nbse_additional_total','imp'=>'nbse_additional_subject_imp'],
-        ]
-    ],
-];
-
-const CL12 = [
+return [
     'a'=>[
         'idcode'=>'arts',
         'ft'=>'nbse_form46arts',

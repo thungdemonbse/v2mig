@@ -18,9 +18,18 @@ SELECT
 FROM " . DB_NAME . ".nbse_form13primary as p
 WHERE  p.nbse_appId_Disable = 'Enable' and nullif(p.nbse_primary_id,'') is not null and nullif(nbse_community,'') is not null and p.nbse_fname is not null;";
 
-$forms = require 'form.php';
-
+$forms = require 'forms.php';
+$centres = require 'centers.php';
 $exams = require 'exams.php';
+$results = require 'results.php';
 
 echo "<pre>";
-echo $exams;
+// echo $primary;
+// echo "<br><br>";
+// echo $forms;
+// echo "<br><br>";
+// echo $exams;
+// echo "<br><br>";
+// echo $centres;
+echo "<br><br>";
+echo $results;
