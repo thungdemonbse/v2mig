@@ -3,54 +3,45 @@ require_once 'common.php';
 
 $streams = require 'streams.php';
 
+$classCenters = [
+    10=>[
+        'id'=>1000000,
+        'table'=>'nbse_centrecode'
+    ],
+    12=>[
+        'id'=>2000000,
+        'table'=>'nbse_centre_twelve'
+    ]
+];
+$selects = [];
+foreach($classCenters as $classLevelId => $classCenter){
+    $selects[] = "SELECT
+    {$classCenter['id']}+c.centre_code_id as id,
+    ifnull(c.`nbse_centre_name`,c.`nbse_centre_code`) as name,
+    c.`nbse_centre_code` as center_code,
+    substring(c.nbse_session,1,4) as session_id,
+    s.id as school_session_id,
+    {$classLevelId} as class_level_id,
+    c.nbse_created_date as created_at,
+    c.nbse_updated_date as updated_at
+FROM ".DB_NAME.".{$classCenter['table']} c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
+WHERE nbse_session is not null
+UNION ALL
+SELECT
+    {$classCenter['id']}+100000+c.centre_code_id as id,
+    c.nbse_compart_centre_name as name,
+    c.`nbse_centre_code` as center_code,
+    substring(c.nbse_session,1,4) as session_id,
+    s.id as school_session_id,
+    {$classLevelId} as class_level_id,
+    c.nbse_created_date as created_at,
+    c.nbse_updated_date as updated_at
+FROM ".DB_NAME.".{$classCenter['table']} c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
+WHERE nbse_session is not null and nullif(c.nbse_compart_centre_name,'') is not null";
+}
+$selects = implode("<br>UNION ALL<br>", $selects);
 $center = "insert into centers (id,name,center_code,session_id,school_session_id,class_level_id,created_at,updated_at)
-SELECT
-    1000000+c.centre_code_id as id,
-    ifnull(c.`nbse_centre_name`,c.`nbse_centre_code`) as name,
-    c.`nbse_centre_code` as center_code,
-    substring(c.nbse_session,1,4) as session_id,
-    s.id as school_id,
-    10 as class_level_id,
-    c.nbse_created_date as created_at,
-    c.nbse_updated_date as updated_at
-FROM ".DB_NAME.".nbse_centrecode c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
-WHERE nbse_session is not null
-union all
-SELECT
-    1100000+c.centre_code_id as id,
-    c.nbse_compart_centre_name as name,
-    c.`nbse_centre_code` as center_code,
-    substring(c.nbse_session,1,4) as session_id,
-    s.id as school_id,
-    10 as class_level_id,
-    c.nbse_created_date as created_at,
-    c.nbse_updated_date as updated_at
-FROM ".DB_NAME.".nbse_centrecode c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
-WHERE nbse_session is not null and nullif(c.nbse_compart_centre_name,'') is not null
-union all
-SELECT
-    2000000+c.centre_code_id as id,
-    ifnull(c.`nbse_centre_name`,c.`nbse_centre_code`) as name,
-    c.`nbse_centre_code` as center_code,
-    substring(c.nbse_session,1,4) as session_id,
-    s.id as school_id,
-    12 as class_level_id,
-    c.nbse_created_date as created_at,
-    c.nbse_updated_date as updated_at
-FROM ".DB_NAME.".nbse_centre_twelve c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
-WHERE nbse_session is not null
-union all
-SELECT
-    2100000+c.centre_code_id as id,
-    c.nbse_compart_centre_name as name,
-    c.`nbse_centre_code` as center_code,
-    substring(c.nbse_session,1,4) as session_id,
-    s.id as school_id,
-    12 as class_level_id,
-    c.nbse_created_date as created_at,
-    c.nbse_updated_date as updated_at
-FROM ".DB_NAME.".nbse_centre_twelve c left join school_sessions s on c.nbse_school_code=s.school_code and substring(c.nbse_session,1,4)=s.session_id
-WHERE nbse_session is not null and nullif(c.nbse_compart_centre_name,'') is not null;";
+$selects;";
 
 $centerExam = "insert into center_exam (center_id,exam_id)
 select c.id as center_id,e.id as exam_id from centers c join exams e on c.session_id=e.exam_session_id and c.class_level_id=e.class_level_id

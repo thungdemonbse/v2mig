@@ -22,7 +22,7 @@ $forms = require 'forms.php';
 $centres = require 'centers.php';
 $exams = require 'exams.php';
 $results = require 'results.php';
-
+$subjects = require 'subject.php'; 
 echo "<pre>";
 // echo $primary;
 // echo "<br><br>";
@@ -31,5 +31,7 @@ echo "<pre>";
 // echo $exams;
 // echo "<br><br>";
 // echo $centres;
+// echo "<br><br>";
+// echo $results;
 echo "<br><br>";
-echo $results;
+echo $subjects;

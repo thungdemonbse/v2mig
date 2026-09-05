@@ -194,7 +194,12 @@ select tmp.primary_id,
 ) as tmp
 where tmp.session_id regexp '^[0-9]{4}$' and nullif(tmp.primary_id,'') is not null;
 
-update student_sessions ss join school_sessions s on ss.school_code=s.school_code and ss.session_id=s.session_id set ss.school_session_id=s.id;
+ALTER TABLE student_sessions ADD INDEX idx_school_session (school_code, session_id);
+ALTER TABLE school_sessions ADD INDEX idx_school_session (school_code, session_id);
+update student_sessions ss join school_sessions s on ss.school_code=s.school_code and ss.session_id=s.session_id set ss.school_id=s.id;
+ALTER TABLE `student_sessions` DROP INDEX `idx_school_session`;
+ALTER TABLE `school_sessions` DROP INDEX `idx_school_session`;
+
 update student_sessions ss join students s on ss.primary_id=s.primary_id set ss.student_id=s.id;";
 
 return $forms;

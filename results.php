@@ -172,6 +172,8 @@ $insert
 $cl11q;
 
 $insert
-$cl12q;";
+$cl12q;
+
+update student_exams e join student_sessions s on e.app_id=s.app_id set e.student_session_id=s.id;";
 
 return $ids."<br>".$results;
