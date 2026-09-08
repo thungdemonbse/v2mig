@@ -140,4 +140,46 @@ FROM ".DB_NAME.".`nbse_subjects_twelve` left join ".DB_NAME.".nbse_subjects_twel
 
 $cl12filler;";
 
+$start = 2016;
+$end = 2026;
+$extracurricular = [];
+$cls = [
+    8=>[
+        'LS'=>'Life Skills',
+        'GK'=>'General Knowledge'
+    ],
+    10=>[
+        'WA'=>'Work Art',
+        'PH'=>'Physical Education'
+    ],
+    12=>[
+        'WA'=>'Work Art',
+        'PH'=>'Physical Education',
+        'EE'=>'Environmental Education'
+    ]
+];
+while($start <= $end){
+    // Your code here
+    foreach($cls as $classId=>$subjects){
+        foreach($subjects as $code=>$name){
+            $extracurricular[] = "('{$code}','{$name}',{$classId},{$start})";
+        }
+    }
+    $start++;
+}
+$extracurricular = implode(",<br>",$extracurricular);
+$extracurricular = "insert into extracurriculars (subject_code,name,class_level_id,session_id) values
+$extracurricular";
+
+$papers = "insert into papers (id,name,subject_id)
+select p.id,p.name,s.id as subject_id
+from ".DB_NAME.".`subject_papers` p
+join subjects s on p.subject_code=s.subject_code and p.class_level_id=s.class_level_id and substring(p.session,1,4)=s.session_id";
+
+$query = "$query
+
+$extracurricular;
+
+$papers;";
+
 return $query;
